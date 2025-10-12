@@ -20,12 +20,14 @@ const number0fFilms = +prompt('Сколько фильмов вы уже пос�
 
 было:
 
+d
+
 
 let numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
 const personalMovieDB = {
     count: numberOfFilms,
     movies: {},
-    actors: {},
+    actors: {}, 
     genres: [],
     private: false
 };

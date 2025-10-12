@@ -38,6 +38,7 @@ const lastMovieYouWatched2 = prompt('Один из последних просм
 const scoreLastMovie2 = prompt('На сколько оцените его?', '');
 
 personalMovieDB.movies[lastMovieYouWatched1] = scoreLastMovie1;
+// personalMovieDB.movies.lastMovieYouWatched1 = scoreLastMovie1;
 personalMovieDB.movies[lastMovieYouWatched2] = scoreLastMovie2;
 
 console.log(personalMovieDB);

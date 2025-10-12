@@ -58,7 +58,23 @@ for (let i = 0; i < 2; i++) {
     const lastMovieYouWatched1 = prompt('Один из последних просмотренных фильмов?', '');
     const scoreLastMovie1 = prompt('На сколько оцените его?', '');
 
-    personalMovieDB.movies[lastMovieYouWatched1] = scoreLastMovie1;
+    if (lastMovieYouWatched1 != null & scoreLastMovie1 != null && lastMovieYouWatched1 != '' && scoreLastMovie1 != '' && lastMovieYouWatched1.length < 50) {
+        personalMovieDB.movies[lastMovieYouWatched1] = scoreLastMovie1;
+        console.log('done');
+    } else {
+        console.log('error');
+        i--;
+    }
+if (personalMovieDB.count < 10) {
+    console.log('Просмотрено довольно мало фильмов');
+} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+    console.log('Вы хороший зритель');
+} else if (personalMovieDB.count >= 30) {
+    console.log('Вы киноман');
+} else {
+    console.log('произошла ошибка')
+}
+    
 }
 
 console.log(personalMovieDB);

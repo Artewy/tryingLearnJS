@@ -473,7 +473,7 @@ GitKraken — удобный, красивый интерфейс для про�
 HTTP — HyperText Transfer Protocol
 SSL certificate — secure sockets layer
 FTP — File Transfer Protocol
-SSH — Secure shell - удаленное управление ОС и передача файлов
+SSH — Secure SHell - удаленное управление ОС и передача файлов
 
 Плюсы HTTPS:
 1. Проще (логин+пароль)
@@ -2358,6 +2358,16 @@ dublin
 
 */
 
+const familyy = ['Peter', 'Ann', 'Alex', 'Linda'];
+
+function showFamily(arr) {
+    if (arr.length === 0) {
+        return `Семья пуста`;
+    }
+    return `Семья состоит из: ${arr.join(' ')}`;
+};
+console.log(showFamily(familyy));
+
 
 const family = ['Peter', 'Ann', 'Alex', 'Linda'];
 
@@ -2408,11 +2418,11 @@ const someString = 'This is some strange string';
 
 function reverse(str) {
     let strin = '';
-    if (typeof(someString == 'string')) {
+    if (typeof(str) == 'string') {
         for (let i = str.length - 1; i >= 0; i--) {
             strin += str[i];
         }
-    } else { strin += 'Ошибка!'}
+    } else { strin = 'Ошибка!'}
     return strin;
 }
 
@@ -2474,12 +2484,25 @@ const baseCurrencies = ['USD', 'EUR'];
 const additionalCurrencies = ['UAH', 'RUB', 'CNY'];
 
 function availableCurr(arr, missingCurr) {
-
+    let str = '';
+    //if (arr.length === 0) {
+    //    str += 'Нет доступных валют';
+    //} else { str += 'Доступные валюты: \n'}
+    arr.length === 0 ? str = 'Нет доступных валют' : str = 'Доступные валюты:\n';
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === missingCurr) {
+            continue;
+        }
+        str += `${arr[i]}\n`;
+    }
+    return str;
 }
-
+console.log(availableCurr([...baseCurrencies, ...additionalCurrencies], 'CNY'));
 
 // -------------------- lesson 25 --------------------
- 
+
+
+
 // -------------------- lesson 26 --------------------
  
 // -------------------- lesson 27 --------------------

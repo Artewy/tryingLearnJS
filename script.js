@@ -2483,7 +2483,7 @@ RUB
 const baseCurrencies = ['USD', 'EUR'];
 const additionalCurrencies = ['UAH', 'RUB', 'CNY'];
 
-function availableCurr(arr, missingCurr) {
+function availableCurr(arr, missingCurr, net) {
     let str = '';
     //if (arr.length === 0) {
     //    str += 'Нет доступных валют';
@@ -2499,12 +2499,234 @@ function availableCurr(arr, missingCurr) {
 }
 console.log(availableCurr([...baseCurrencies, ...additionalCurrencies], 'CNY'));
 
-// -------------------- lesson 25 --------------------
+// улучшенная версия
+
+const baseCurrenciesss = ['USD', 'EUR'];
+const additionalCurrenciesss = ['UAH', 'RUB', 'CNY'];
 
 
+function availableCurr(atmCurrencies, ...missingCurrencies) {
+  var availableCurrencies = atmCurrencies.filter(curr => !missingCurrencies.includes(curr));
+  
+  if (availableCurrencies.length === 0)
+    return 'Нет доступных валют';
+  
+  return 'Доступные валюты:\n' + availableCurrencies.join('\n');
+}
 
-// -------------------- lesson 26 --------------------
+console.log(availableCurr(
+  [...baseCurrencies, ...additionalCurrencies],
+  'EUR', 'UAH', 'RUB', 'CNY'));
+
+
+// -------------------- lesson 25 (35) --------------------
+
+// основы Объектно-ориентированного программирования, прототипно-ориентированное наследие
+// стиль -- прототипно-ориентированное программирование
+
+// подходы в программировании
+// истинный
+// функциональный
+// объектно-ориентированный (JS) -- 
+// Главная роль ОБЪЕКТ (содержит методы, свойства, 
+// любой тип данных, представляет целостную сущность)
+// процедурный
+
+// Смысл ООП -- представить вещь как объект с набором свойств методов
+
+'fgkfdkgd' // -- примитив, обычный тип данных
+let str35 = 'some'; // метод, свойство -- объект
+let srt35Obj = String(str35);
+
+console.log(typeof(str35)); // string
+console.log(typeof(str35Obj)); // object
+
+
+const soldier = { // Один большой (главный прототип)
+    health: 400, // например, модального окна (ширина, высота, функционал)
+    armor: 100
+};
+
+const john = { // прототип модального окна от главного
+    health: 100,
+}
+
+// УСТАРЕВШИЙ формат
+// __proto__ -- deprecate (устаревшее)
+john.__proto__ = soldier; // джон -- прототип солдата
+console.log(john); // вывод { health: 100 }
+console.log(john.armor); // вывод 100
+
+console.log(john.health);
+console.log(soldier.health);
+// благодаря прототипам john получил свойство armor
+
+// вместо Proto используем object.create, object.get/(set)PrototypeOf
+
+Object.setPrototypeOf(john, soldier); // 1 -- объект, которому назначается прототип 2 в динамике
+// это идентично 'john.__proto__ = soldier;'
+
+// обычно это делается в статике:
+
+const john = Object.create(soldier); // создаем новый объект Джон, который
+// будет наследоваться от soldier
+
+// -------------------- lesson 26 (36) --------------------
  
+// практика 4. используем объекты ( practice4.js )
+
+// ------------------------------ Homework #11 (после урока 36) ------------------------------
+
+/*
+У вас есть небольшой кусочек данных о торговом центре, 
+которые записаны в объекте shoppingMallData. 
+Они содержат массив с данными о магазинах, где указана 
+длина и ширина помещения; высоту помещения; 
+стоимость отопления за 1 кубический метр и бюджет на оплату отопления за месяц.
+
+Основная задача - это написать функцию isBudgetEnough, 
+которая будет возвращать строку. 
+Если бюджета хватает для отопления всего объема торгового центра - 
+выводится 'Бюджета достаточно', если нет - 'Бюджета недостаточно'. И все
+
+Но эта задача содержит несколько подзадач внутри:
+
+- вычисление общей площади всех магазинов,
+ которая вычисляется как длина магазина, 
+ умноженная на его ширину;
+
+- вычисление общего объема торгового центра, 
+так как цена отопления указана в кубических метрах;
+
+- определение того, хватает ли бюджета на оплату такого объема;
+
+- все числа идут без единиц измерения для упрощения, просто цифры и все;
+
+- функция должна продолжать работать, даже если изменяется 
+количество магазинов, высота, бюджет или подставляется 
+вообще другой объект.
+*/
+
+const shoppingMallData = {
+    shops: [
+        {
+            width: 10,
+            length: 5
+        },
+        {
+            width: 15,
+            length: 7
+        },
+        {
+            width: 20,
+            length: 5
+        },
+        {
+            width: 8,
+            length: 10
+        } // длина и ширина помещений
+    ],
+    height: 5, // высота помещения
+    moneyPer1m3: 30, // стоимость отопления за 1 м3
+    budget: 50000 // бюджет на оплату отопления за месяц
+}
+
+function isBudgetEnough(data) {
+/* вычисление общей площади всех магазинов,
+- вычисление общего объема торгового центра, 
+так как цена отопления указана в кубических метрах;
+- определение того, хватает ли бюджета на оплату такого объема; */    
+let square = 0;    
+let volume = 0;
+
+data.shops.forEach(shop => {
+    square += shop.width * shop.length;
+});
+    volume = square * data.height;
+
+
+    if (data.budget - (volume * data.moneyPer1m3) >= 0) {
+        return 'Бюджета достаточно'
+    } else {
+        return 'Бюджета недостаточно'
+    }
+}
+
+console.log(isBudgetEnough(shoppingMallData));
+
+/*
+Задача:
+
+У вас есть список учеников, которые хотят поиграть в игру:
+
+const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam'];
+Но команд может быть только 3 по 3 человека. 
+Напишите функцию sortStudentsByGroups, 
+которая принимает в себя массив строк.
+
+Внутри она сначала сортирует имена по алфавиту. 
+Затем распределяет учеников по 3 человека в 3 группы по алфавитному порядку. 
+Эти группы должны быть массивами. Как итог, функция возвращает новый массив 
+с тремя командами и строкой как 4й элемент.
+
+Пример:
+
+sortStudentsByGroups(students)  =>
+
+[
+  [ 'Andrew', 'Ann', 'Bernard' ],
+  [ 'Cris', 'Josh', 'Mark' ],
+  [ 'Peter', 'Sam', 'Sandra' ],
+  'Оставшиеся студенты: Takesi'
+]
+Если убрать одно студента из списка, то результат будет:
+
+[
+  [ 'Andrew', 'Ann', 'Bernard' ],
+  [ 'Cris', 'Josh', 'Mark' ],
+  [ 'Peter', 'Sam', 'Sandra' ],
+  'Оставшиеся студенты: -'
+]
+А если добавить одного, то:
+
+[
+  [ 'Andrew', 'Ann', 'Bernard' ],
+  [ 'Cris', 'Josh', 'Mark' ],
+  [ 'Peter', 'Sam', 'Sandra' ],
+  'Оставшиеся студенты: Takesi, Somebody'
+]
+То есть, меняется содержимое строки. Все оставшиеся ученики попадают туда.
+
+Задача интересная, немного заковыристая, но все необходимое 
+для неё мы уже проходили. Просто распишите логику действий строка за строкой.
+*/
+const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam'];
+//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi'];
+//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam', 'Lindsay'];
+//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam', 'Lindsay', 'Arnold'];
+
+function sortStudentsByGroups(arr, chunkSize) {
+    let result = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        result.push(arr.slice(i, i + chunkSize));
+    }
+    return result;
+}
+
+const chunkedStudents = sortStudentsByGroups(students, 3)
+console.log(chunkedStudents);
+
+
+
+
+
+
+
+
+
+
+
+
 // -------------------- lesson 27 --------------------
  
 // -------------------- lesson 28 --------------------

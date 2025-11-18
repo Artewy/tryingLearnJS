@@ -2775,24 +2775,109 @@ console.log(sortStudentsByGroups(student));
 function hello() {
     console.log('hello world');
 }
+
 hello();
 
 function hi() {
     console.log('say hi');
 }
+
 hi();
 
 const arr = [1, 14, 4, 30, 54],
     sorted = arr.sort(compareNum);
 
-function compareNum() {
+function compareNum(a, b) {
     return a - b;
 }
-
 console.log(sorted);
 
+// Структура консоли:
+/*
+1) Elements -- html структура, стили css, которые применяются к каждому отдельному тегу; .hov/.cls -- псевдоклассы и псевдоселекторы
+2) Console -- 
+3) Sources -- исходные доступные материалы
+4) Network -- работа с сетью. Как быстро загружаются скрипты, структуры, отслеживание запросов 
+5) Performance -- работа и загрузка структуры
+6) Memory --
+7) Application --
+8) Security --
+9) Audits --
+*/
 
-// -------------------- lesson 28 --------------------
+// Остановимся на вкладке Source. Как дебажить наш код? 
+// Breakpoints -- метка, позволяющая останавливать код на определенном участке
+// Выбираем необходимую строку, кликая на ее номер.
+// можно использовать команду debugger как breakpoint
+
+// -------------------- lesson 28 (38) --------------------
+
+// Динамическая типизация в JS
+// Возможность 1 типа данных превращаться в другой тип данных (строка -- число и наоборот, объект -- булкой)
+// в других ЯП есть статическая типизация (число останется числом)
+
+// smth to String
+// 1)
+console.log(typeof (String(null))); // string
+console.log(String(null)); // null
+
+// 2) конкатенация (сложение строки с чем-то (в т.ч со строкой))
+// ПРИ СЛОЖЕНИИ СО СТРОКОЙ ВСЕ РАВНО ПОЛУЧАЕТСЯ СТРОКА
+console.log(typeof (5 + ''));
+
+const num38 = 5;
+console.log('http://vk.com/catalog/' + num38); // старый код, есть интерполяция
+
+const fontSize = 26 + 'px';
+
+
+// smth to Number
+// 1)
+console.log(typeof (Number('4')));
+
+// 2) унарный плюс
+console.log(typeof (+'4'));
+
+// 3)
+console.log(typeof (parseInt('15px', 10)));
+
+// реальное применение
+
+let answ = +prompt('Hello', '');
+
+
+// smth to Boolean
+// 1)
+// 0, -0 (-0.0; -0x0), 0n (0x0n; but -0n === 0n), '', null, undefined, NaN, false; -- false
+// все остальное -- true
+
+let switcher = null;
+
+if (switcher) {
+    console.log('working...');
+}
+
+// false -- ничего не выводится
+
+switcher = 1;
+
+if (switcher) {
+    console.log('working...');
+}
+
+// true
+
+// 2)
+console.log(typeof (Boolean('4')));
+
+// 3)
+console.log(typeof (!!4444));
+
+console.log(Boolean([])); // выдаст true/false
+
+// ВСЕГДА ЭКВИВАЛЕНТНА  console.log(typeof (4444));
+// !! -- принудительное преобразование любого значения в булку, 
+// основано на truthy/falsy (истинно-/лже-подобное)
 
 // -------------------- lesson 29 --------------------
 

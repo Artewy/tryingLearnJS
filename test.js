@@ -1,8 +1,26 @@
 "use strict"
 
-console.dir([1, 2, 3]);
+function hello() {
+    console.log('hello world');
+}
 
+hello();
 
+function hi() {
+    console.log('say hi');
+}
+
+hi();
+
+const arr = [1, 14, 4, 30, 54, 27, 25, 228],
+    sorted = arr.sort(compareNum);
+
+function compareNum(a, b) {
+    console.log(a, b)
+    return a - b;
+}
+
+console.log(sorted);
 
 
 

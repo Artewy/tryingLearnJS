@@ -41,7 +41,8 @@ console.log(result1);
 
 {
     let result = 50;
-console.log(result); }
+    console.log(result);
+}
 
 
 // less2
@@ -86,7 +87,7 @@ userNumber = 24;
 
 // Числа 1, 2, 3 (Infinity (+/-) - console.log(4/0), Not a Number (string * 9) - NaN - не число, нет мат логики)
 let numberLesson2 = 4.6;
-console.log(4/0);
+console.log(4 / 0);
 console.log('string' * 9);
 
 // Строки 'string', "name", либо тильда `name`
@@ -112,7 +113,8 @@ console.log(und);
 // --> 'number'
 // typeof 123n;
 // --> 'bigint'
-
+// typeof 123f; 
+// --> с плавающей точкой
 
 
 // Объекты (комплексные):
@@ -190,7 +192,7 @@ const arrayObjectLess3 = {
 };
 
 
-const objectLess3 = {a: 1, c: 2}; // Структура хранения данных в парном формате
+const objectLess3 = { a: 1, c: 2 }; // Структура хранения данных в парном формате
 
 const objectLesson3 = {
     'Anna': 500,
@@ -239,17 +241,17 @@ alert('Hello') // Встроенное в браузер окно. Предуп�
 const resultLess4 = confirm('Are u here?'); // Такое же окно с двумя вариантами ответа
 console.log(resultLess4); // Запись результата true/false в консоль
 const answer1 = prompt('Вы программист?', '');
-console.log(typeof(answer1)); // Узнать тип данных
+console.log(typeof (answer1)); // Узнать тип данных
 // Вся информация, приходящая от пользователя - СТРОКА!
 
 const answer2 = +prompt('Вы программист?', ''); // Динамическая типизация
 // Преобразование типа данных "строка" в "число"
 
 const answer3 = prompt('Вы программист?', '');
-console.log(typeof(answer3 + 5)); // Сложение строк: 10+5=105
+console.log(typeof (answer3 + 5)); // Сложение строк: 10+5=105
 
 const answer4 = +prompt('Вы программист?', '');
-console.log(typeof(answer4 + 5)); // Сложение чисел: 10+5=15
+console.log(typeof (answer4 + 5)); // Сложение чисел: 10+5=15
 
 
 // Зададим список вопросов, поместив их в массив
@@ -262,7 +264,7 @@ document.write(answers); // Замена содержимого на то, чт�
 /* Однако 'Hello world' останется, т.к тег body пуст, не сформирован.
 prompt, alert, confirm блокируют построение страницы до их выполнения
 */
-console.log(typeof(answers)); // Объект! т.к массив - частный случай
+console.log(typeof (answers)); // Объект! т.к массив - частный случай
 // Однако есть ошибка console.log(typeof(null)); -- выведет object
 
 
@@ -332,19 +334,19 @@ console.log(decr);
 
 // Остаток от деления
 
-console.log(5%2); // 1
+console.log(5 % 2); // 1
 
 // Равенство (==), ПРИСВАИВАНИЕ (=)
 
-console.log(2*4 == 8); // true, сравнение ПО ЗНАЧЕНИЮ, а не по типам данных. можно сравнить число со строкой
-console.log(2*4 === '8'); // Строгое сравнение (с типами данных). false
+console.log(2 * 4 == 8); // true, сравнение ПО ЗНАЧЕНИЮ, а не по типам данных. можно сравнить число со строкой
+console.log(2 * 4 === '8'); // Строгое сравнение (с типами данных). false
 
 // Оператор И (&&)
 // Оператор ИЛИ (||)
 // Отрицание (!)
 
 const isChecked = true,
-      isClose = true;
+    isClose = true;
 
 
 console.log(isChecked && isClose); // true; 'isClose' = true, 'isChecked' = true.
@@ -608,7 +610,7 @@ switch (num) {
 // Оператор И (&&) (ПРИМ 1)
 
 const hamburger = true,
-      fries = true;
+    fries = true;
 
 if (hamburger && fries) {
     console.log('yum')
@@ -620,7 +622,7 @@ console.log((hamburger && fries));
 // строка может стать числом и наоборот; что угодно может стать логическим значением)
 
 const hamburger1 = 5,
-      fries1 = 0;
+    fries1 = 0;
 
 if (hamburger1 && fries1) {
     console.log('yum')
@@ -644,7 +646,7 @@ console.log((hamburger1 && fries1));
 // Решение
 
 const hamburger2 = 2,
-      fries2 = 1;
+    fries2 = 1;
 
 if (hamburger2 === 3 && fries2) { // Можно записать 'fries2 === 1' or 'fries2 >= 1', 'fries' тоже подойдет
     console.log('yum')
@@ -690,9 +692,9 @@ console.log('fdijfidjdfjd' && 0); -- вывод 0, 0 это неправда, в
 // ИЛИ 3 гамбургера И 2 колы ИЛИ 3 картошки фри И хотя бы 1 порция наггетсов
 
 const hamburger4 = 3,
-      cola4 = 3,
-      fries4 = 0,
-      chickenNuggets4 = 2;
+    cola4 = 3,
+    fries4 = 0,
+    chickenNuggets4 = 2;
 
 if ((hamburger4 === 3 && cola4 == 2) || (fries4 === 3 && chickenNuggets4)) {
     console.log('nice');
@@ -711,26 +713,26 @@ if ((hamburger4 === 3 && cola4 == 2) || (fries4 === 3 && chickenNuggets4)) {
 
 // #1. Что выведется в консоль (логические выражения)?
 
-console.log( NaN || 2 || undefined ); // 2
+console.log(NaN || 2 || undefined); // 2
 
-console.log( NaN && 2 && undefined ); // NaN
+console.log(NaN && 2 && undefined); // NaN
 
-console.log( 1 && 2 && 3 ); // 3
+console.log(1 && 2 && 3); // 3
 
-console.log( !1 && 2 || !3 ); // false
+console.log(!1 && 2 || !3); // false
 
-console.log( 25 || null && !3 ); // 25
+console.log(25 || null && !3); // 25
 
-console.log( NaN || null || !3 || undefined || 5); // 5
+console.log(NaN || null || !3 || undefined || 5); // 5
 
-console.log( NaN || null && !3 && undefined || 5); // 5
+console.log(NaN || null && !3 && undefined || 5); // 5
 
-console.log( 5 === 5 && 3 > 1 || 5); // true
+console.log(5 === 5 && 3 > 1 || 5); // true
 
 // Последний пример эквивалентен данному примеру ниже, так как правая часть (до оператора ИЛИ -- true)
 // Вывод в консоль первой правды, то есть -- 'true'
 
-console.log (true || 5);
+console.log(true || 5);
 
 
 // #2. Выполняется ли условие?
@@ -741,7 +743,7 @@ const cola5 = 0;
 const nuggets5 = 2;
 
 if (hamburger5 === 3 && cola5 || fries5 === 3 && nuggets5) {
-   console.log('Done!')
+    console.log('Done!')
 }
 
 // Да
@@ -762,7 +764,7 @@ const cola6 = 0;
 const nuggets6 = 2;
 
 if (hamburger6 || cola6 || fries6 === 3 || nuggets6) {
-   console.log('Done!')
+    console.log('Done!')
 }
 
 // Да
@@ -775,7 +777,7 @@ const cola7 = 0;
 const nuggets7 = 2;
 
 if (hamburger7 && cola7 || fries7 === 3 && nuggets7) {
-   console.log('Done!')
+    console.log('Done!')
 }
 
 // Нет
@@ -796,7 +798,7 @@ while (number13 < 55) {
 
 do {
     console.log(number13);
-    num++;    
+    num++;
 }
 while (number13 < 55);
 
@@ -847,9 +849,9 @@ mark: for (let i = 0; i < 3; i++) {
     console.log('first: ${i}');
     for (let j = 0; j < 3; j++) {
         console.log('second: ${j}');
-            for (let k = 0; k < 3; k++) {
-                if (k === 2) continue mark; // метка работает и с 'break'
-                console.log('third: ${k}');
+        for (let k = 0; k < 3; k++) {
+            if (k === 2) continue mark; // метка работает и с 'break'
+            console.log('third: ${k}');
         }
     }
 }
@@ -897,7 +899,7 @@ function firstTask() {
     for (let i = 5; i < 11; i++) {
         console.log(i);
     }
-    
+
 }
 
 // 2) При помощи цикла for вывести числа от 20 до 10 в консоль. 
@@ -908,12 +910,12 @@ function firstTask() {
 function secondTask() {
     // Пишем решение вот тут
     for (let i = 20; i > 9; i--) {
-        if (i === 13) break 
+        if (i === 13) break
         else {
             console.log(i);
         }
     }
-    
+
 }
 
 // 3) При помощи цикла for выведите чётные числа от 2 до 10 включительно
@@ -926,7 +928,7 @@ function thirdTask() {
             console.log(i);
         }
     }
-    
+
 }
 
 // Место для четвертой задачи
@@ -952,13 +954,13 @@ function fourthTask() {
     while (i <= 16) {
         if (i % 2 === 0) {
             i++;
-            continue; 
+            continue;
         } else {
             console.log(i);
             i++;
         }
     }
-    
+
 }
 
 // Место для пятой задачи
@@ -980,8 +982,8 @@ function fifthTask() {
         arrayOfNumbers[i - 5] = i;
         console.log(arrayOfNumbers);
     }
-    
-    
+
+
     // Не трогаем
     return arrayOfNumbers;
 }
@@ -1020,8 +1022,8 @@ function firstTask() {
     for (let i = 0; i < arr.length; i++) {
         result[i] = arr[i];
 
-    }    
-        console.log(result);   
+    }
+    console.log(result);
     // Не трогаем
     return result;
 }
@@ -1040,10 +1042,10 @@ function secondTask() {
 
     // Пишем решение вот тут
     for (let i = 0; i < data.length; i++) {
-        if (typeof(data[i]) === 'number') {
+        if (typeof (data[i]) === 'number') {
             data[i] = data[i] * 2;
         } else {
-            if (typeof(data[i]) === 'string') {
+            if (typeof (data[i]) === 'string') {
                 data[i] = data[i] + ' - done';
             }
         }
@@ -1110,21 +1112,21 @@ while (i <= 16) {
         console.log(i);
         i++;
     }
-} 
+}
 
 // 5) Заполните массив цифрами от 5 до 10 включительно. Помните, что 
 // элементы массива можно сформировать так же, как и обращаться к ним: arr[0]
 
 const arrayOfNumbers = [];
 
-    // Пишем решение вот тут
-    const result = [];
-    for (let i = 5; i < 11; i++) {
-        result[i - 5] = i;
-    }
-    console.log(result);
-    
-    // Не трогаем
+// Пишем решение вот тут
+const result = [];
+for (let i = 5; i < 11; i++) {
+    result[i - 5] = i;
+}
+console.log(result);
+
+// Не трогаем
 return arrayOfNumbers;
 
 
@@ -1137,16 +1139,16 @@ arr.length, а к элементам обращаемся все так же:
 arr[0], arr[1] и тд.
 Должен получиться точно такой же массив */
 
-    const arr123 = [3, 5, 8, 16, 20, 23, 50];
-    const result123 = [];
+const arr123 = [3, 5, 8, 16, 20, 23, 50];
+const result123 = [];
 
-    // Пишем решение вот тут
-    for (let i = 0; i < arr123.length; i++) {
-        result123[i] = arr123[i];
-    }
-    console.log(result123);
-    // Не трогаем
-    return result123;
+// Пишем решение вот тут
+for (let i = 0; i < arr123.length; i++) {
+    result123[i] = arr123[i];
+}
+console.log(result123);
+// Не трогаем
+return result123;
 
 /* 2) Измените данный массив так, чтобы все числа 
 были увеличены в 2 раза, а если попадается 
@@ -1154,21 +1156,21 @@ arr[0], arr[1] и тд.
 Для определения типа данных используйте typeof();
 Должно получиться: [ 10, 20, 'Shopping - done', 40, 'Homework - done' ] */
 
-    const data111 = [5, 10, 'Shopping', 20, 'Homework'];
+const data111 = [5, 10, 'Shopping', 20, 'Homework'];
 
-    // Пишем решение вот тут
-    for (let i = 0; i < data111.length; i++) {
-        if (typeof(data111[i]) == 'number') {
-            data111[i] = data111[i] * 2;
-        } 
-        if (typeof(data111[i]) == 'string') {
-            data111[i] = data111[i] + ' - done';
-        }
+// Пишем решение вот тут
+for (let i = 0; i < data111.length; i++) {
+    if (typeof (data111[i]) == 'number') {
+        data111[i] = data111[i] * 2;
     }
-    console.log(data111);
-    
-    // Не трогаем
-    return data111;
+    if (typeof (data111[i]) == 'string') {
+        data111[i] = data111[i] + ' - done';
+    }
+}
+console.log(data111);
+
+// Не трогаем
+return data111;
 
 /* 
 3) Разверните массив data наоборот при помощи цикла 
@@ -1176,47 +1178,47 @@ arr[0], arr[1] и тд.
 Должно получиться: [ 'Homework', 20, 'Shopping', 10, 5 ]
 */
 
-    const data12 = [5, 10, 'Shopping', 20, 'Homework'];
-    const result12 = [];
+const data12 = [5, 10, 'Shopping', 20, 'Homework'];
+const result12 = [];
 
-    // Пишем решение вот тут
-    for (let i = 0; i < data12.length; i++) {
-        result12[i] = data12[data12.length - 1 - i];
-    }
-    console.log(result12);
-    // Не трогаем
-    return result12;
+// Пишем решение вот тут
+for (let i = 0; i < data12.length; i++) {
+    result12[i] = data12[data12.length - 1 - i];
+}
+console.log(result12);
+// Не трогаем
+return result12;
 
 // а если совместить две задачи вместе, получим
 
 // первое решение
-    const data123 = [5, 10, 'Shopping', 20, 'Homework'];
-    const resULT123 = [];
-    for (let i = 0; i < data123.length; i++) {
-        if (typeof(data123[data123.length - 1 - i]) == 'number') {
-            data123[data123.length - 1 - i] = data123[data123.length - 1 - i] * 2;
-        }   
-        if (typeof(data123[data123.length - 1 - i]) == 'string') {
-            data123[data123.length - 1 - i] = data123[data123.length - 1 - i] + ' - done';
-        }
-        resULT123[i] = data123[data123.length - 1 - i];
+const data123 = [5, 10, 'Shopping', 20, 'Homework'];
+const resULT123 = [];
+for (let i = 0; i < data123.length; i++) {
+    if (typeof (data123[data123.length - 1 - i]) == 'number') {
+        data123[data123.length - 1 - i] = data123[data123.length - 1 - i] * 2;
     }
-    console.log(resULT123);
-    
+    if (typeof (data123[data123.length - 1 - i]) == 'string') {
+        data123[data123.length - 1 - i] = data123[data123.length - 1 - i] + ' - done';
+    }
+    resULT123[i] = data123[data123.length - 1 - i];
+}
+console.log(resULT123);
+
 // второе решение
 
-    const dat = [5, 10, 'Shopping', 20, 'Homework'];
-    const resul = [];
-    for (let i = 0; i < dat.length; i++) {
-        resul[i] = dat[dat.length - 1 - i];
-        if (typeof(resul[i]) == 'number') {
-            resul[i] = resul[i] * 2;
-        }   
-        if (typeof(resul[i]) == 'string') {
-            resul[i] = resul[i] + ' - done';
-        }
+const dat = [5, 10, 'Shopping', 20, 'Homework'];
+const resul = [];
+for (let i = 0; i < dat.length; i++) {
+    resul[i] = dat[dat.length - 1 - i];
+    if (typeof (resul[i]) == 'number') {
+        resul[i] = resul[i] * 2;
     }
-    console.log(resul);
+    if (typeof (resul[i]) == 'string') {
+        resul[i] = resul[i] + ' - done';
+    }
+}
+console.log(resul);
 
 // задача **
 // сделать елочку из звезд (астериск)
@@ -1348,7 +1350,7 @@ console.log(numberic);
 // return -- позволяет вернуть во "внешний мир" из функции:
 
 function calc(a, b) {
-    return(a + b);
+    return (a + b);
     console.log(4, 3) // unreachable code -- мертвый код, который никогда не выполнится
     // Поэтому после return мы ничего не задаем
 }
@@ -1419,7 +1421,7 @@ convert(500, usdRate);
 convert(500, eurRate);
 
 // -------------------- lesson 18 (26) --------------------
- 
+
 // важность return
 
 // если полученное значение понадобится дальше -- требуется return
@@ -1453,7 +1455,7 @@ promotion(resss);
 function text() {
     for (let i = 0; i < 5; i++) {
         console.log(i);
-        if (i === 3) {return}
+        if (i === 3) { return }
     }
     console.log('done');
 }
@@ -1463,7 +1465,7 @@ test();
 // что же будет возвращать function? undefined
 // любая функция что-то возвращает, если ничего не задано -- undefined. проверим это:
 
-function doNothing() {};
+function doNothing() { };
 console.log(doNothing() === undefined);
 
 // вывод 'true', нет фактически заданного return -- вывод undefined
@@ -1510,7 +1512,7 @@ console.log(sayHello('Artem'));
 
 // Решение
 function returnNeighboringNumbers(massive) {
-    return[massive - 1, massive, massive + 1]
+    return [massive - 1, massive, massive + 1]
 }
 
 console.log(returnNeighboringNumbers(-100));
@@ -1545,9 +1547,9 @@ console.log(returnNeighboringNumbers(-100));
 */
 
 function getMathResult(num, times) {
-    if (times <= 0 || typeof(times) !== 'number') {
+    if (times <= 0 || typeof (times) !== 'number') {
         return num;
-    } 
+    }
     let stringer = '';
     for (let i = 1; i <= times; i++) {
         if (i === times) {
@@ -1556,21 +1558,21 @@ function getMathResult(num, times) {
             stringer += `${num * i}---`;
         }
     }
-    return(stringer);
-}    
+    return (stringer);
+}
 console.log(getMathResult(10, 5));
 
 
 
 // -------------------- lesson 19 (27) --------------------
- 
+
 // Методы и свойства у строк и чисел
 // Методы -- вспомогательные функции, свойства -- вспомогательные значения
 
 const str = 'test';
 console.log(str.length); // свойство -- Количество символов в строке, 
 
-const arr = [1, 2, 3, 4, 5, 10]; 
+const arr = [1, 2, 3, 4, 5, 10];
 console.log(arr.length); // свойство кол-во элементов внутри массива
 // Свойство не вызывается, пишется через точку
 // Методы, которые будут вспомогательными функциями уже вызываются при помощи ()
@@ -1649,7 +1651,7 @@ calculateVolumeAndArea(-15)  => 'При вычислении произошла 
 */
 
 function calculateVolumeAndArea(i) {
-    if (typeof(i) !== 'number' || i < 0 || !Number.isInteger(i)) {
+    if (typeof (i) !== 'number' || i < 0 || !Number.isInteger(i)) {
         return "При вычислении произошла ошибка"
     }
 
@@ -1712,10 +1714,10 @@ function getCoupeNumber(i) {
     if (i === 0 || i > 36) {
         return "Таких мест в вагоне не существует"
     }
-    if (typeof(i) !== 'number' || !Number.isInteger(i) || i < 1) {
+    if (typeof (i) !== 'number' || !Number.isInteger(i) || i < 1) {
         return "Ошибка. Проверьте правильность введенного номера места"
     }
-    
+
     return Math.ceil(i / 4);
 
 }
@@ -1793,7 +1795,7 @@ findMaxNumber(1, 5, '6', '10');  =>  0
 */
 
 function findMaxNumber(a, b, c, d) {
-    if (typeof(a) !== 'number' || typeof(b) !== 'number' || typeof(c) !== 'number' || typeof(d) !== 'number') {
+    if (typeof (a) !== 'number' || typeof (b) !== 'number' || typeof (c) !== 'number' || typeof (d) !== 'number') {
         return 0;
     } else { return Math.max(a, b, c, d); }
 }
@@ -1824,7 +1826,7 @@ fib(0) => ''"
 // F(n) = F(n-1) + F(n-2), где F(0) = 0, F(1) = 1 для n >= 2
 
 function fib(number) {
-    if (typeof(number) !== 'number' || number <= 0 || !Number.isInteger(number)) {
+    if (typeof (number) !== 'number' || number <= 0 || !Number.isInteger(number)) {
         return '';
     }
     let result = '';
@@ -1849,13 +1851,13 @@ function fib(n) {
     return n <= 1 ? n : fib(n - 1) + fib(n - 2);
 }
 
-console.log( fib(7) );
+console.log(fib(7));
 
 
 
 
 // -------------------- lesson 20 (28) --------------------
- 
+
 // метод trim()
 // позволяет удалять пробельные символы с начала и конца строки 
 // (пробел, табуляция, неразрывный пробел и пр. + с конца LF, CR, пр.)
@@ -1866,13 +1868,13 @@ console.log(orig.trim()); // 'foo'
 // доп проверка преобразования ответа от пользователя (' ' -- не пустая строка!!!)
 
 // -------------------- lesson 21 (29) --------------------
- 
+
 // callback-функции
 // функция, которая должна быть выполнена после того, как другая функция завершила свое выполнение
 
 function first() {
     // do smth
-    setTimeout(function() {
+    setTimeout(function () {
         console.log(1);
     }, 500);
 }
@@ -1893,7 +1895,7 @@ function learnJS(lang, callback) {
     callback();
 } // Шаблон функции
 
-learnJS('JavaScript', function() {
+learnJS('JavaScript', function () {
     console.log(`я прошел урок`);
 }); // анонимная функция, обращение одноразовое
 /* аргумент функции: 
@@ -1920,7 +1922,7 @@ learnJS('JavaScript', done); // не вызываем функцию, а пер�
 
 
 // -------------------- lesson 22 (31) --------------------
- 
+
 // Объекты. Методы объектов. Деструктуризация объектов
 // Объекты -- ассоциативные массивы
 
@@ -1945,7 +1947,7 @@ delete options.name;
 // ПРЯМЫХ КОНСТАНТ В JS НЕ СУЩЕСТВУЕТ
 
 for (let key in options) { // способ перебора всех свойств объекта 'for in'
-    if (typeof(options[key]) == 'object') { // fix вывод colors: obj obj
+    if (typeof (options[key]) == 'object') { // fix вывод colors: obj obj
         for (let i in options[key]) {
             console.log(`Свойство ${i} имеет значение ${options[key][i]}`);
         }
@@ -1962,7 +1964,7 @@ for (let key in options) { // способ перебора всех свойс�
 let counter = 0;
 
 for (let key in options) { // способ перебора всех свойств объекта 'for in'
-    if (typeof(options[key]) == 'object') { // fix вывод colors: obj obj
+    if (typeof (options[key]) == 'object') { // fix вывод colors: obj obj
         for (let i in options[key]) {
             console.log(`Свойство ${i} имеет значение ${options[key][i]}`);
             counter++; // если хотим вести подсчет на верхнем уровне (в главном объекте), убираем эту строку
@@ -1971,15 +1973,15 @@ for (let key in options) { // способ перебора всех свойс�
         console.log(`Свойство ${key} имеет значение ${options[key]}`);
         counter++;
     }
-} 
+}
 console.log(counter);
 
 // классический метод подсчета количества свойств в объекте:
 
 let counter1 = 0;
-for (let key in options) { 
-        counter1++;
-    }
+for (let key in options) {
+    counter1++;
+}
 console.log(counter1);
 
 // методы объектов, встроенные в JS
@@ -2000,7 +2002,7 @@ const options31 = {
         border: 'black',
         background: 'red',
     },
-    makeTest: function() { // первый метод внутри объекта, созданный самостоятельно
+    makeTest: function () { // первый метод внутри объекта, созданный самостоятельно
         console.log('test');
     }
 };
@@ -2021,7 +2023,7 @@ options31.makeTest(); // Запуск. '()' означают, что что-то
 // console.log(options['colors']['border']);
 // Используем деструктуризацию объекта (в качестве отдельных структур):
 
-const {border, background} = options31.colors; // Деструктуризация (вытащили свойство в качестве отдельной переменной)
+const { border, background } = options31.colors; // Деструктуризация (вытащили свойство в качестве отдельной переменной)
 console.log(border);
 
 /* Как устроен JS изнутри. Все что существует в языке так или иначе идет от объектов
@@ -2035,7 +2037,7 @@ JS -- прототипно-ориентированный язык */
 // Метод объекта в javascript -- это просто функция, которая добавлена в ассоциативный массив
 
 // -------------------- lesson 23 (32) --------------------
- 
+
 // массивы и псевдомассивы. методы для работы с ними
 // массив -- это структура, которая содержит элементы по порядку
 
@@ -2073,7 +2075,7 @@ for (let value of arr32) { // можем использовать break/continue
 // принимает в себя 3 аргумента. 1 -- который мы перебираем, 2 -- номер по порядку
 // 3 -- ссылка на массив, который мы перебираем
 
-arr32.forEach(function(item, i, array) { // не можем использовать break/continue
+arr32.forEach(function (item, i, array) { // не можем использовать break/continue
     console.log(`${i}: ${item} внутри массива ${array}`);
 });
 
@@ -2131,7 +2133,7 @@ console.log(product.join('; '));
 // в них не будет методов forEach, push, pop и тд
 
 // -------------------- lesson 24 (34) --------------------
- 
+
 // Передача данных по ссылке и по значению
 // Spread оператор
 
@@ -2224,8 +2226,8 @@ console.log(newArray);
 // 4: оператор разворота SPREAD для массивов (ES6) и объектов (ES8) (стандартизирован в ES9 2018)
 
 const video = ['YT', 'vimeo', 'rutube'],
-      blogs = ['wordpress', 'livejournal', 'blog'],
-      internet = [...video, ...blogs, 'vk', 'telegram'];
+    blogs = ['wordpress', 'livejournal', 'blog'],
+    internet = [...video, ...blogs, 'vk', 'telegram'];
 
 console.log(internet);
 
@@ -2237,7 +2239,7 @@ const q = {
     one: 1,
     two: 2
 };
-const newObjQ = {...q};
+const newObjQ = { ...q };
 
 
 // ------------------------------ Homework #10 (после урока 34) ------------------------------
@@ -2284,11 +2286,11 @@ const personalPlanPeter = {
         },
         exp: '1 month'
     },
-    showAgeAndLangs: function(plan) {
-        const {age} = plan;
-        const {languages} = plan.skills;
+    showAgeAndLangs: function (plan) {
+        const { age } = plan;
+        const { languages } = plan.skills;
         let str = `Мне ${age} и я владею языками: `;
-        languages.forEach(function(lang) {
+        languages.forEach(function (lang) {
             str += `${lang.toUpperCase()} `;
         });
         return str;
@@ -2303,7 +2305,7 @@ showExperience(personalPlanPeter) => '1 month'
 P.S. желательно использовать деструктуризацию, но не обязательно */
 
 function showExperience(plan) {
-    const {exp} = plan.skills;
+    const { exp } = plan.skills;
     //const NewPersonalPlanPeter = {...personalPlanPeter};
     //console.log(NewPersonalPlanPeter.skills.exp);
     return exp;
@@ -2322,12 +2324,12 @@ P.S. Для переноса строки используется \n в кон�
 
 function showProgrammingLangs(plan) {
     let str = '';
-    const {programmingLangs} = plan.skills;
-    for (let key in programmingLangs) { 
-            str += `Язык ${key} изучен на ${programmingLangs[key]}\n`;
-    } 
+    const { programmingLangs } = plan.skills;
+    for (let key in programmingLangs) {
+        str += `Язык ${key} изучен на ${programmingLangs[key]}\n`;
+    }
     return str;
-} 
+}
 showProgrammingLangs(personalPlanPeter);
 console.log(showProgrammingLangs(personalPlanPeter));
 
@@ -2375,8 +2377,8 @@ function showFamily(arr) {
     let str = '';
     if (arr.length === 0) {
         str = `Семья пуста`;
-    } else {str = `Семья состоит из: `}
-    arr.forEach(function(member) {
+    } else { str = `Семья состоит из: ` }
+    arr.forEach(function (member) {
         str += `${member} `;
     });
     return str;
@@ -2387,7 +2389,7 @@ const favoriteCities = ['liSBon', 'ROME', 'miLan', 'Dublin'];
 
 function standardizeStrings(arr) {
     let str = ''
-    arr.forEach(function(city) {
+    arr.forEach(function (city) {
         str += `${city.toLowerCase()} \n`;
         console.log(city.toLowerCase());
     });
@@ -2418,11 +2420,11 @@ const someString = 'This is some strange string';
 
 function reverse(str) {
     let strin = '';
-    if (typeof(str) == 'string') {
+    if (typeof (str) == 'string') {
         for (let i = str.length - 1; i >= 0; i--) {
             strin += str[i];
         }
-    } else { strin = 'Ошибка!'}
+    } else { strin = 'Ошибка!' }
     return strin;
 }
 
@@ -2433,7 +2435,7 @@ console.log(reverse(someString));
 const someStrangeString = 'This is some strange string';
 
 function reverse(string) {
-    if (typeof(string) !== 'string') {
+    if (typeof (string) !== 'string') {
         return 'Ошибка!';
     }
     return string.split('').reverse().join('');
@@ -2489,6 +2491,10 @@ function availableCurr(arr, missingCurr, net) {
     //    str += 'Нет доступных валют';
     //} else { str += 'Доступные валюты: \n'}
     arr.length === 0 ? str = 'Нет доступных валют' : str = 'Доступные валюты:\n';
+
+    // ПРАВИЛЬНО:  let str = arr.length === 0 ? 'Нет доступных валют' : 'Доступные валюты:\n';
+
+
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === missingCurr) {
             continue;
@@ -2506,17 +2512,17 @@ const additionalCurrenciesss = ['UAH', 'RUB', 'CNY'];
 
 
 function availableCurr(atmCurrencies, ...missingCurrencies) {
-  var availableCurrencies = atmCurrencies.filter(curr => !missingCurrencies.includes(curr));
-  
-  if (availableCurrencies.length === 0)
-    return 'Нет доступных валют';
-  
-  return 'Доступные валюты:\n' + availableCurrencies.join('\n');
+    var availableCurrencies = atmCurrencies.filter(curr => !missingCurrencies.includes(curr));
+
+    if (availableCurrencies.length === 0)
+        return 'Нет доступных валют';
+
+    return 'Доступные валюты:\n' + availableCurrencies.join('\n');
 }
 
 console.log(availableCurr(
-  [...baseCurrencies, ...additionalCurrencies],
-  'EUR', 'UAH', 'RUB', 'CNY'));
+    [...baseCurrencies, ...additionalCurrencies],
+    'EUR', 'UAH', 'RUB', 'CNY'));
 
 
 // -------------------- lesson 25 (35) --------------------
@@ -2538,8 +2544,8 @@ console.log(availableCurr(
 let str35 = 'some'; // метод, свойство -- объект
 let srt35Obj = String(str35);
 
-console.log(typeof(str35)); // string
-console.log(typeof(str35Obj)); // object
+console.log(typeof (str35)); // string
+console.log(typeof (str35Obj)); // object
 
 
 const soldier = { // Один большой (главный прототип)
@@ -2572,7 +2578,7 @@ const john = Object.create(soldier); // создаем новый объект �
 // будет наследоваться от soldier
 
 // -------------------- lesson 26 (36) --------------------
- 
+
 // практика 4. используем объекты ( practice4.js )
 
 // ------------------------------ Homework #11 (после урока 36) ------------------------------
@@ -2632,16 +2638,16 @@ const shoppingMallData = {
 }
 
 function isBudgetEnough(data) {
-/* вычисление общей площади всех магазинов,
-- вычисление общего объема торгового центра, 
-так как цена отопления указана в кубических метрах;
-- определение того, хватает ли бюджета на оплату такого объема; */    
-let square = 0;    
-let volume = 0;
+    /* вычисление общей площади всех магазинов,
+    - вычисление общего объема торгового центра, 
+    так как цена отопления указана в кубических метрах;
+    - определение того, хватает ли бюджета на оплату такого объема; */
+    let square = 0;
+    let volume = 0;
 
-data.shops.forEach(shop => {
-    square += shop.width * shop.length;
-});
+    data.shops.forEach(shop => {
+        square += shop.width * shop.length;
+    });
     volume = square * data.height;
 
 
@@ -2701,11 +2707,39 @@ sortStudentsByGroups(students)  =>
 для неё мы уже проходили. Просто распишите логику действий строка за строкой.
 */
 const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam'];
-//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi'];
-//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam', 'Lindsay'];
-//const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam', 'Lindsay', 'Arnold'];
 
-function sortStudentsByGroups(arr, chunkSize) {
+function sortStudentsByGroups(arr) {
+    // Сортируем массив по алфавиту
+    const sorted = arr.slice().sort();
+
+    // Создаем 3 группы по 3 человека
+    const groups = [];
+    for (let i = 0; i < 3; i++) {
+        groups.push(sorted.slice(i * 3, i * 3 + 3));
+    }
+
+    // Формируем строку с оставшимися студентами
+    const remaining = sorted.slice(9);
+    let remainingStr;
+
+    if (remaining.length === 0) {
+        remainingStr = 'Оставшиеся студенты: -';
+    } else {
+        remainingStr = `Оставшиеся студенты: ${remaining.join(', ')}`;
+    }
+
+    // Возвращаем результат
+    return [...groups, remainingStr];
+}
+
+
+// ультра решение на прод
+
+const student = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam']; // 'Sam'
+const GROUP_SIZE = 3;
+
+
+function splitIntoChunks(arr, chunkSize) {
     let result = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
         result.push(arr.slice(i, i + chunkSize));
@@ -2713,67 +2747,172 @@ function sortStudentsByGroups(arr, chunkSize) {
     return result;
 }
 
-const chunkedStudents = sortStudentsByGroups(students, 3)
-console.log(chunkedStudents);
+function sortStudentsByGroups(arr) {
+    const sortedStudents = arr.slice().sort();
+    const groups = splitIntoChunks(sortedStudents, GROUP_SIZE);
+
+    const createRemainingStudentsStr = (remainingStudents) =>
+        'Оставшиеся студенты: ' + (remainingStudents.length > 0 ? remainingStudents.join(', ') : '-');
+
+    if (groups.length === 0) {
+        return [createRemainingStudentsStr([])];
+    }
+
+    const isFullGroups = groups.at(-1).length === GROUP_SIZE;
+    const remainingStudents = isFullGroups ? [] : groups.pop();
+
+    return [...groups, createRemainingStudentsStr(remainingStudents)];
+}
+
+console.log(sortStudentsByGroups(student));
 
 
 
+// -------------------- lesson 27 (37) --------------------
+
+// Отлавливаем ошибки в своем коде при помощи консоли разработчика. Breakpoints
+
+function hello() {
+    console.log('hello world');
+}
+hello();
+
+function hi() {
+    console.log('say hi');
+}
+hi();
+
+const arr = [1, 14, 4, 30, 54],
+    sorted = arr.sort(compareNum);
+
+function compareNum() {
+    return a - b;
+}
+
+console.log(sorted);
 
 
-
-
-
-
-
-
-
-// -------------------- lesson 27 --------------------
- 
 // -------------------- lesson 28 --------------------
- 
+
 // -------------------- lesson 29 --------------------
- 
+
 // -------------------- lesson 30 --------------------
- 
+
 // -------------------- lesson 31 --------------------
- 
+
 // -------------------- lesson 32 --------------------
- 
+
 // -------------------- lesson 33 --------------------
- 
+
 // -------------------- lesson 34 --------------------
- 
+
 // -------------------- lesson 35 --------------------
- 
+
 // -------------------- lesson 36 --------------------
- 
+
 // -------------------- lesson 37 --------------------
- 
+
 // -------------------- lesson 38 --------------------
- 
+
 // -------------------- lesson 39 --------------------
- 
+
 // -------------------- lesson 40 --------------------
- 
+
 // -------------------- lesson 41 --------------------
- 
+
 // -------------------- lesson 42 --------------------
- 
+
 // -------------------- lesson 43 --------------------
- 
+
 // -------------------- lesson 44 --------------------
- 
+
 // -------------------- lesson 45 --------------------
- 
+
 // -------------------- lesson 46 --------------------
- 
+
 // -------------------- lesson 47 --------------------
- 
+
 // -------------------- lesson 48 --------------------
- 
+
 // -------------------- lesson 49 --------------------
- 
+
 // -------------------- lesson 50 --------------------
- 
+
 // -------------------- lesson 51 --------------------
- 
+
+/*
+1) Функция isOpen не хочет правильно работать. Что мы уже не пробовали
+подставлять в неё - результат все время неправильный. 
+Необходимо найти причины и исправить.
+
+2) Функция isAverageLunchPriceTrue должна брать цены двух любых блюд 
+из меню, складывать их и сравнивать с средним чеком (averageLunchPrice).
+
+Сейчас функция работает, но постоянно выдает неправильный результат. 
+Ведь из представленного меню сумма двух любых цен всегда будет больше 
+20. Необходимо найти причину и исправить.
+
+3) Функция transferWaitors создана для того, чтобы копировать шаблон 
+данных и передавать их в другой ресторан. Конечно, в другом ресторане 
+будут другие блюда, другие официанты и тп. Сейчас эта функция только в 
+начале разработки и должна менять данные про официантов.
+
+Но в нынешнем виде мы обнаружили, что после её запуска не только 
+копия данных содержит новых официантов, но и основные данные! 
+В restorantData сотрудник Alice исчезает и заменяется Mike! 
+Необходимо найти причину и немедленно исправить, чтобы данные были разделены.
+*/
+
+const restorantData = {
+    menu: [
+        {
+            name: 'Salad Caesar',
+            price: '14$'
+        },
+        {
+            name: 'Pizza Diavola',
+            price: '9$'
+        },
+        {
+            name: 'Beefsteak',
+            price: '17$'
+        },
+        {
+            name: 'Napoleon',
+            price: '7$'
+        }
+    ],
+    waitors: [
+        { name: 'Alice', age: 22 }, { name: 'John', age: 24 }
+    ],
+    averageLunchPrice: '20$',
+    openNow: true
+};
+
+function isOpen(prop) {
+    let answer = '';
+    prop ? answer = 'Открыто' : answer = 'Закрыто';
+    return answer;
+}
+
+console.log(isOpen(restorantData.openNow))
+
+function isAverageLunchPriceTrue(fDish, sDish, average) {
+    if (+fDish.price.slice(0, -1) + (+sDish.price.slice(0, -1)) < +average.slice(0, -1)) {
+        return 'Цена ниже средней';
+    } else {
+        return 'Цена выше средней';
+    }
+}
+
+console.log(isAverageLunchPriceTrue(restorantData.menu[0], restorantData.menu[1], restorantData.averageLunchPrice));
+
+function transferWaitors(data) {
+    const copy = Object.assign({}, data);
+
+    copy.waitors = [{ name: 'Mike', age: 32 }];
+    return copy;
+}
+
+console.log(transferWaitors(restorantData));
+

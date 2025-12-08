@@ -3078,7 +3078,9 @@ console.log(0 || '' || 2 || undefined || true || false);
 
 let box = document.getElementById('box');
 
-console.log(box);
+console.log(box); // получить элемент по ID
+
+// можно получать элементы по тегу (button, div), но их может быть много
 
 // -------------------- lesson 32 --------------------
 

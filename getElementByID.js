@@ -19,5 +19,5 @@ hearts.forEach(item => {
 });
 
 
-const oneHears = document.querySelector('.heart'); // первый элемент при помощи CSS селектора
+const oneHeart = document.querySelector('.heart'); // первый элемент при помощи CSS селектора
 console.log(oneHeart);

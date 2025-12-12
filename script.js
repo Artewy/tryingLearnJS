@@ -3082,7 +3082,28 @@ console.log(box); // получить элемент по ID
 
 // можно получать элементы по тегу (button, div), но их может быть много
 
-// -------------------- lesson 32 --------------------
+const btns = document.getElementsByTagName('button')[1]; // конкретная кнопка -- вторая
+console.log(btns); // второй вариант console.log(btns[1])
+// если переменная одна -- все равно будет HTMLCollection [button]
+
+const circles = document.getElementsByClassName('circle'); // получи элементы через Класс
+console.log(circles);
+
+// современные методы
+
+const hearts = document.querySelectorAll('.heart');
+hearts.forEach(item => {
+    console.log(item);
+});
+
+const oneHeart = document.querySelector('.heart'); // первый элемент при помощи CSS селектора
+console.log(oneHeart);
+
+// -------------------- lesson 32 (42) --------------------
+
+// Действия с элементами на странице
+
+// измненение стилей элементов
 
 // -------------------- lesson 33 --------------------
 

@@ -1,3 +1,19 @@
+// const btnss = document.querySelector('button'),
+//     overlay = document.querySelector('.overlay');
+// // способы назначения (комментарий ниже. КРАТКО -- НЕ ОЧЕНЬ)
+// btn.onclick = function () {
+//     alert('Click');
+// }
+// const deleteElementt = (e) => {
+//     console.log(e.target);
+//     console.log(e.type);
+// };
+// btn.addEventListener('click', deleteElementt);
+// overlay.addEventListener('click', deleteElementt);
+
+
+
+
 const box = document.getElementById('box'),
     btns = document.getElementsByTagName('button'),
     circles = document.getElementsByClassName('circle'),
@@ -10,8 +26,8 @@ console.dir(box);
 // inline styles
 
 //box.style.backgroundColor = 'blue';
-//box.style.width = '500px' // не сработает, CSS не знает, что такое 500, 
-// нужно указать В ВИДЕ СТРОКИ'500px' 
+//box.style.width = '500px' // не сработает, CSS не знает, что такое 500,
+// нужно указать В ВИДЕ СТРОКИ'500px'
 
 // как назначить несколько Inline стилей? есть свойство -- css text
 
@@ -48,8 +64,8 @@ const div = document.createElement('div'); // существует только 
 div.classList.add('black');
 document.body.append(div); // берем тег body, в самый конец помещаем элемент div
 
-// document.querySelector('.wrapper').append(div); если не нужно снова обращаться к нему, в противном случае 
-// помещаем его в константы и получаем 
+// document.querySelector('.wrapper').append(div); если не нужно снова обращаться к нему, в противном случае
+// помещаем его в константы и получаем
 wrapper.append(div);
 // Обратный метод -- Prepend, вставляет в начало
 // еще 2 метода -- before/after -- вставить перед/после чего-то

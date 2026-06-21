@@ -2182,7 +2182,14 @@ const numbers = {
     b: 5,
     c: {
         x: 7,
-        y: 4
+        y: {
+            zzz: 10,
+            aaa: 11,
+            bbb: {
+                BBB: 1111,
+                JJJ: 2222
+            }
+        }
     }
 };
 
@@ -4052,7 +4059,7 @@ function Lesson57() {
 
     // Однако при переборе массивов и строк таким способом есть проблема -- перебор может идти не по порядку.
     // for in НЕОБЯЗАТЕЛЬНО ПЕРЕБИРАЕТ СВОЙСТВА ПО ПОРЯДКУ!!! И НЕ РЕКОМЕНДУЕТСЯ ПРИМЕНЯТЬ ЕГО НА МАССИВАХ И СТРОКАХ!!!
-
+    // для того чтобы узнать, является ли свойство перечисляемым, можно вызвать property.enumerable
     // была введена конструкция for of (проходится по значениям перебираемого объекта)
     // отличие от for in -- он получает сам КЛЮЧ, а for of -- он получает само ЗНАЧЕНИЕ
     // Однако просто при замене for in -> for of мы получим undefined
@@ -4164,6 +4171,8 @@ function Lesson57() {
 
     // 2) у кого есть Symbol.iterator 
     // -- Массивы, строки, типизированные массивы, set, map, DOM-Collections
+    // Array.prototype[Symbol.iterator](); TypedArray.prototype[Symbol.iterator](); String.prototype[Symbol.iterator]()
+    // Map.prototype[Symbol.iterator](); Set.prototype[Symbol.iterator]()
 
     // 3) разница между for in и for of -- 
     // for in -- это метод итерации по «перечисляемым» свойствам объекта. 
@@ -4216,58 +4225,736 @@ function Lesson57() {
         // и в переменную 'iterator' сразу получим объект '.iterator' с методом next() и привязкой к определенному объекту
         console.log(iterator.next());
     */
+    /* другой вариант итератора:
+class Sequence {
+    constructor(start = 0, end = Infinity, interval = 1) {
+        this.start = start;
+        this.end = end;
+        this.interval = interval;
+    }
+    [Symbol.iterator]() {
+        let counter = 0;
+        let nextIndex = this.start;
+        return {
+            next: () => {
+                if (nextIndex <= this.end) {
+                    let result = { value: nextIndex, done: false }
+                    nextIndex += this.interval;
+                    counter++;
+                    return result;
+                }
+            return { value: counter, done: true };
+            }
+        }
+    }
+};
+    */
 }
 Lesson57();
 
 // -------------------- lesson 48 (58) --------------------
 
+// map (карты)
+
+function Lesson58() {
+    const user = {
+        name: 'Alex',
+        surname: 'Smith',
+        showMyPublicData: function () {
+            console.log(`${this.name} ${this.surname}`);
+        }
+    }
+    console.log(user);
+    console.log(typeof (Object.keys(user)[0])); // string
+    // что будет если в ключ задать не строку, а число, объект и тд? name -> 4: 'Alex'
+    // 4 -> string
+    function testChange() {
+        const user = {
+            4: 'Alex',
+            surname: 'Smith',
+            showMyPublicData: function () {
+                console.log(`${this.name} ${this.surname}`);
+            }
+        }
+        console.log(user);
+        console.log(typeof (Object.keys(user)[0])); // string
+        // если поставить объект {} -- ошибка
+    }
+    testChange();
+
+    /*
+    Иногда вместо строк нужны другие типы данных (не строки), например список магазинов в торговой сети
+    Каждый из магазинов содержит перечень товаров, и на каждый из них выделен определенный бюджет */
+    // Необходимо (после ввода магазинов) ввести бюджет попарно к каждому магазину, но ключ не может быть объектом
+    // Тогда используем map -- специфические структуры данных, похожие на объект, только вместо ключей (свойств) может использоваться
+    // Объект, функция, массив и тд. В map свои методы, но типы данных это тот же объект. \
+    // ВНУТРИ map (карты) МАССИВ С МАССИВАМИ [[Entries]]
+
+
+    const shops = [
+        { rice: 500 },
+        { oil: 200 },
+        { bread: 50 }
+    ];
+
+    const map = new Map();
+
+    const budget = [5000, 15000, 25000];
+
+    // Методы map
+
+    // 1. set --
+    shops.forEach((shop, i) => {
+        map.set(shop, budget[i]);
+    })
+
+    // map.set(shops[0], 5000)
+    //     .set(shops[1], 15000)
+    //     .set(shops[2], 25000);
+    console.log(map); // object, первое свойство которого -- object
+
+    // 2. get --
+    console.log(map.get(shops[0])); // 5000
+
+    // 3. has -- (проверка чего-либо на наличие карты)
+    console.log(map.has(shops[0])); // true
+
+    // 4. delete -- удалить что-то из карты 
+
+    // 5. clear -- полностью очистить карту
+
+    // 6. size -- количество элементов на данный момент внутри карты
+
+    // доказательство того что внутри массив с массивами.
+    const testMap = new Map([
+        [{ paper: 400 }, 8000]
+    ]);
+    shops.forEach((shop, i) => {
+        testMap.set(shop, budget[i]);
+    })
+
+    // перебор карты (3 встроенных метода, 4 способа)
+
+    // 1) keys -- возврат итерируемого объекта по ключам (получить список всех товаров во всех магазинах)
+    const goods = [];
+    for (let shop of map.keys()) { // карта -> массив с объектами
+        goods.push(Object.keys(shop)[0]); // Обращение к отдельному объекту для получения его свойства 
+        // -> преобразование в массив свойств по ключам
+    }
+    console.log(goods);
+
+    // 2) price -- получить итерируемый объект по значениям
+
+    for (let price of map.values()) {
+        console.log(price); // получить бюджеты магазинов
+    }
+
+    // 3) entries -- то же самое по сути
+    for (let price of map.entries()) {
+        // можно деструктуризировать массив: for (let [shop, price] of map.entries()) {
+        console.log(price); // получить массивы в виде ключ-значение
+    }
+
+    // 4) forEach 
+    map.forEach((value, key, map) => {
+        console.log(key, value);
+    })
+
+    // можно преобразовать Объект -> Карта -- Object.entries() (если надо расширить карту. в объект не можем добавить инфу,
+    // так как в объекте свойство не может быть объектом -- трансформируем объект в карту)
+
+    function ObjectEntries() {
+        const user = {
+            name: 'Alex',
+            surname: 'Smith',
+            showMyPublicData: function () {
+                console.log(`${this.name} ${this.surname}`);
+            }
+        }
+        const userMap = new Map(Object.entries(user));
+        console.log(userMap);
+
+        // Карта -> объект
+        const newUserObject = Object.fromEntries(userMap);
+        console.log(newUserObject);
+    }
+    ObjectEntries();
+
+    // отличие карт от объектов
+    // 1) ключи у карт -- любые -- массив, объект, функция, цифры; у объектов ключи -- ТОЛЬКО строки
+    // 2) порядок свойств в картах всегда такой, какой был задан; у объектов нет четкого порядка 
+    // в зависимости от времени добавления свойства (динамически добавили новое свойство -- рандомно подставилось в любое место)
+    // 3) при создании пустой карты -- ничего не наследуется даже через прототип в отличие от Объекта, там они наследуются
+    // и это может быть проблемой, если мы их перезапишем (Symbol, урок 55)
+    // 4) карты легко перебирать в отличие от объектов (Итерируемые конструкции, урок 57)
+    // 5) размер карты легко получить через .size (в объекте трансформация в массив -- узнаем длину (Object.is()))
+}
+
+
+
 // -------------------- lesson 49 (59) --------------------
 
+// set -- особый вид коллекций (по типу массива), где каждое значение встречается 1 раз
+
+function Lesson59() {
+    const arr = [1, 1, 2, 2, 4, 5, 6, 5];
+    const set = new Set(arr);
+    console.log(set); // Set(5) {1, 2, 4, 5, 6}
+
+
+    // Задача -- приходит БД студентов на одном курсе. ФИО студента не должно повторяться
+
+    const arr1 = ['Alex', 'Ann', 'Oleg']
+    const set1 = new Set(arr1);
+    set1.add('Ivan'); // Добавить новые данные
+    // Такой функционал можно сделать в обычном массиве. перед тем как пушить новое значение в массив при помощи Push,
+    // Мы можем проходиться по всему массиву. Если не нашли такое значение -- добавляем в массив
+    // Аналогичный метод -- Array.prototype.find()
+    set1.delete('Ann'); // Удалить данные
+    console.log(set1.has('Alex')); // проверка данных
+    //set1.clear(); // очистить
+    set1.size; // размер сета (набора данных)
+    for (let value of set1) console.log(value); // перебор данных
+    set1.forEach((value, valueAgaing, set1) => { // значение + значение
+        console.log(value, valueAgaing);
+    })
+    console.log(set1); // Set(3) {'Alex', 'Ann', 'Oleg'}
+
+    // set имеет такие же методы как и map:
+    // set.values
+    console.log(set1.values());
+    // set.keys (обратная совместимость с map, так как нет ключей)
+    console.log(set1.keys()); // -//-
+    // entries -- также для обратной совместимости с map
+    console.log(set.entries());
+
+    // на практике обычно хватает for of, forEach для перебора значений в этих данных
+
+    // функция-помощник для фильтрации массива
+    // быстрая фильтрация -- массив передается в set, в котором избавляемся от дублирующих значений, затем обратно формируем тот же массив
+    // который возвращается из функции уже с уникальными значениями
+    const arrTestSort = ['Alex', 'Alex', 'Halley', 'Bob', 'Martin', 'Bob'];
+    function unique(arrTestSort) {
+        return Array.from(new Set(arrTestSort));
+    }
+    console.log(unique(arrTestSort));
+}
+
+//bigMap, bigSet (сначала изучить принцип работы сборщика мусора)
+
+Lesson59();
 // -------------------- lesson 50 (60) --------------------
 
+// BigInt -- нужен когда console.log(Number.MAX_SAFE_INTEGER) (2**53 - 1) переполнен. 
+console.log(Number.MAX_SAFE_INTEGER)
+
+function Lesson60() {
+    const BigInt = 12123456789098765432246789076543n;
+    //const sameBigInt = BigInt(12123456789098765432246789076543);
+    console.log(typeof (BigInt)); // bigint
+    // 1 -- bigint нельзя использовать со встроенными объектами Math
+    // 2 --  нельзя смешивать обычные числа и bigint console/log(5n + 1)
+    // console.log(Math.round(5n))
+    console.log(1n + 2n) // можно
+
+    // + * - ** деление с остатком, побитовые операторы (И, ИЛИ, НЕ, сдвиги), сравнения -- допустимые действия
+
+    console.log(5n / 2n); // 2n
+
+    console.log(2n > 5) // false
+    console.log(2n == 2) // true
+    console.log(2n === 2) // false. разные типы данных
+    // Что делать если нужно сложить обычное число с bigint? явная конвертация типов данных 
+
+    let bigint = 1n;
+    let number = 2;
+    // сложим их
+    console.log(bigint + BigInt(number)); // 3n -- BigInt
+    console.log(Number(bigint) + number); // 3 -- Number
+    console.log(+bigint + number); // error
+    // если bigint выходит за рамки (диапазон) integer и мы меняем его в Number -- лишние символы будут ОТБРОШЕНЫ.
+    // Используем только тогда, когда это нужно.
+
+}
+
+Lesson50();
 // -------------------- lesson 51 (61) --------------------
+
+// homework1
+
+/*
+В каждой книге есть n страниц с номерами страниц от 1 до n. Написать функцию amountOfPages, 
+аргумент которой summary составляется путем сложения количества цифр всех номеров страниц. 
+Эта функция возвращает число - количество страниц n в книге. Чтобы было понятно что такое количество цифр, давайте рассмотрим примеры.
+
+Пример:
+
+Если на входе функции summary = 25, то на результат должен быть 17. Всего в числах от 1 до 17 содержится 25 цифр: 1234567891011121314151617.
+
+Функция на вход как раз принимает это общее количество цифр, а возвращает конечное число, то есть последнюю страницу книги.
+
+    amountOfPages(5) => 5
+
+    amountOfPages(25) => 17
+
+    amountOfPages(1095) => 401   
+
+    amountOfPages(185) => 97
+*/
+
+function amountOfPages(summary) {
+    let str = '';
+    let n = 0;
+    for (let i = 1; i <= summary; i++) {
+        str += i;
+        if (str.length === summary) {
+            n = i;
+            break;
+        }
+    }
+    return n;
+}
+console.log(amountOfPages(185));
+
+
+function amountOfPages(summary) {
+    let currentDigitsSum = 0;
+    let page = 0;
+    while (currentDigitsSum < summary) {
+        page++;
+        currentDigitsSum += String(page).length;
+    }
+
+    return page;
+}
 
 // -------------------- lesson 52 (62) --------------------
 
+//homework2
+
+/*
+Панграмма — это предложение, в котором каждая буква алфавита встречается хотя бы по одному 
+разу по возможности без повторений. Например, предложение «The quick brown fox jumps over 
+the lazy dog» является панграммой, поскольку в нем хотя бы один раз используются буквы от A до Z (регистр значения не имеет).
+
+Напишите функцию isPangram, которая принимает в себя строку и возвращает логическое значение. 
+Если строка является панграммой - вернется true, если нет - false.
+
+Пример:
+
+isPangram(«The quick brown fox jumps over the lazy dog») => true
+
+isPangram(«Hello world») => false
+
+P.S. Эта задача имеет много вариантов решения, часть из которых использует возможности, 
+которые мы будем проходить дальше по курсу. Но и без них можно это сделать.
+*/
+function isPangram(string) {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const lowerCaseString = string.toLowerCase();
+
+    for (let i = 0; i < alphabet.length; i++) {
+        if (!lowerCaseString.includes(alphabet[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+function isPangram(string) {
+    const lettersMatch = string.match(/[a-z]/gi);
+    if (!lettersMatch) return false;
+    const lowerCaseLetters = lettersMatch.map(letter => letter.toLowerCase());
+    const uniqueLetters = new Set(lowerCaseLetters);
+    return uniqueLetters.size === 26;
+}
+
+
+function isPangram(string) {
+    return new Set(string.toUpperCase().split('')).size >= 26; // не работоспособно, можно сломать знаками препинания
+}
+
+function isPangram(string) {
+    const onlyLetters = string.toLowerCase().match(/[a-z]/g) || [];
+    return new Set(onlyLetters).size === 26;
+}
 // -------------------- lesson 53 (63) --------------------
 
-// -------------------- lesson 54 (64) --------------------
+//homework3
 
-// -------------------- lesson 55 (65) --------------------
+/*
+Создайте функцию deepCount, которая будет считать количество всех элементов в массиве, 
+включая и вложенные массивы. Учтите, что сам вложенный массив тоже входит в счет. 
+Чтобы понять задачу детальнее, давайте рассмотрим примеры:
 
-// -------------------- lesson 56 (66) --------------------
+deepCount([1, 5, 3]) => 3
 
-// -------------------- lesson 57 (67) --------------------
+deepCount(["1", 5, "3", ["10"]]) => 5 (Заметьте, что последний элемент был посчитан сам + его внутренность)
 
-// -------------------- lesson 58 (68) --------------------
+deepCount([1, 2, [3, 4, [5]]]) => 7
 
-// -------------------- lesson 59 (69) --------------------
+deepCount([]) => 0
 
-// -------------------- lesson 60 (70) --------------------
+deepCount([[[[[[[[[]]]]]]]]]) => 8
+*/
 
-// -------------------- lesson 61 (71) --------------------
+// -------------------- lesson 54 (62) --------------------
 
-// -------------------- lesson 62 (72) --------------------
+// new pet-project. ES6+
 
-// -------------------- lesson 63 (73) --------------------
+// ClassList и делегирование событий
 
-// -------------------- lesson 64 (74) --------------------
+// D:\IT\firstProjectJS-master\JsInWork_chapter_4\script.js
 
-// -------------------- lesson 65 (75) --------------------
+/*
+// Получим кнопки
+const btns = document.querySelectorAll('button'); // Обращаемся к документу
+console.log(btns[0].classList.length); // Чтобы обратиться к списку классов -- classList
+// Надо обратиться к конкретному элементу; методы+количество классов у элемента -- length
+// Консоль выдает 2 -- два класса есть у первой кнопки
 
-// -------------------- lesson 66 (76) --------------------
+// Чаще всего применяют методы classList:
 
-// -------------------- lesson 67 (77) --------------------
+console.log(btns[0].classList.item(0)); // получить класс под определенным индексом -- blue
+// add, remove, toggle -- добавить, удалить, переключить
+console.log(btns[0].classList.add('red', 'brown')); // blue some red
+console.log(btns[0].classList.remove('blue')); // some red
+console.log(btns[0].classList.toggle('blue')); // some red blue -- добавить то, чего не было или убрать то, что было
 
-// -------------------- lesson 68 (78) --------------------
+if (btns[1].classList.contains('red')) {
+    console.log('red'); // red если верно
+}
 
-// -------------------- lesson 69 (79) --------------------
+// Когда человек нажимает на первую кнопку -- проверяем вторую кнопку. если у нее есть класс 'red' -- удаляем, если нет -- добавляем
+btns[0].addEventListener('click', () => {
+    if (!btns[1].classList.contains('red')) { // есть ли у второй кнопки класс 'red'?
+        btns[1].classList.add('red');
+    } else {
+        btns[1].classList.remove('red');
+    }
+    // альтернатива -- btns[1].classList.toggle('red');
+    // в сложных констукциях не всегда доступно использовать только toggle, необходимо проверить существование класса
+});
 
-// -------------------- lesson 70 (80) --------------------
+console.log(btns[0].className); // blue some -- одной строкой. УСТАРЕВШИЙ МЕТОД
 
-// -------------------- lesson 71 (81) --------------------
+// Дегегирование событий
 
-// -------------------- lesson 72 (82) --------------------
+// Пример -- много кнопок на сайте, хотим, чтобы при нажатии на каждую вызывалось одно и то же событие
+// Проблема "вручную навесить" -- новые кнопки/триггеры добавлены без нашего ведома -- события у них уже не будет, они не обрабатываются циклом где мы назначаем обработчики
+
+// Берем родителя кнопок и работаем только с ним, проверяя, на что мы кликнули
+
+// Есть 10Б класс, нужно каждому ученику что-то рассказать -- иначе попросим сообщить информацию всему классу сразу
+
+const btns1 = document.querySelectorAll('button'),
+    wrapper = document.querySelector('.btn-block');
+
+wrapper.addEventListener('click', (event) => {
+    console.dir(event.target); // div#first.btn-block; button -> tagName
+    if (event.target && event.target.tagName == "BUTTON") { //event.target нужен для проверки события клика (<br>)
+        console.log('hello');
+    }
+    if (event.target && event.target.classList.contains('blue')) { // работает для тех кнопок у которых есть класс 'blue'
+        console.log('hello');
+    }
+});
+
+/* btns1.forEach(btn => {
+    btn.addEventListener('click', () => {
+        console.log('hello');
+    });
+});
+не ворк, нет делегирования на динамических кнопках, т.к он создан раньше
+*/
+
+/*
+const btn = document.createElement('button');
+btn.classList.add('red');
+wrapper.append(btn);
+
+// Проверка на определенные совпадения
+wrapper.addEventListener('click', (event) => {
+    console.dir(event.target); // div#first.btn-block; button -> tagName
+    if (event.target && event.target.matches("button.red")) { // Элемент совпадает с чем-то, можно указать интересующие селекторы
+        // Работает на тех кнопках, которые имеют селектор 'red', даже созданные динамически
+        console.log('hello');
+    }
+});
+*/
+
+// -------------------- lesson 55 (63) --------------------
+
+// табы в новом проекте
+
+/*
+window.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tabheader__item'),
+        tabsContent = document.querySelectorAll('.tabcontent'),
+        tabsParent = document.querySelector('.tabheader__items');
+
+    function hideTabContent() {
+        tabsContent.forEach(item => {
+            // item.style.display = 'none';
+            item.classList.add('hide');
+            item.classList.remove('show', 'fade');
+        });
+
+        tabs.forEach(item => {
+            item.classList.remove('tabheader__item_active');
+        })
+    }
+
+    function showTabContent(i = 0) {
+        // tabsContent[i].style.display = 'block';
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
+        tabs[i].classList.add('tabheader__item_active');
+    }
+
+    hideTabContent();
+    showTabContent();
+
+    tabsParent.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+        }
+    });
+});
+*/
+
+// -------------------- lesson 56 (64) --------------------
+
+// скрипты и время их выполнения. setTimeout, setInterval -- управление временем выполнения скриптов
+
+// например, модальное окно спустя 30-60с после захода на сайт
+
+// Чтобы запустить функцию через определенный промежуток времени -- setTimeout
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('click', () =>{
+    // const testTimerId = setTimeout(logger, 2000);
+    const testTimerId = setInterval(logger, 2000);
+}) // не забываем про локальные переменные
+
+// скрипт повторяется через определенное количество времени -- setInterval, все точно также
+
+// решение локальных переменных -- просто заранее создать глобальные переменные
+
+
+
+const timerId = setTimeout(function(text) {
+    console.log(text);
+}, 2000, 'hello'); // Функция, которая запустится через определенный промежуток времени 
+// (объявление или название функи), вызовется через 2000мс (2с)
+// далее можно указать аргументы, которые будут использоваться самой функцией.
+
+let timerId = setInterval(logger, 500),
+    i = 0;
+
+function logger () {
+    if (i === 3) {
+        clearInterval(timerId);
+    }
+    console.log('some text');
+    i++;
+}
+
+
+// Почему setTimeout мы задаем в переменную? она может работать без нее
+// когда мы передаем ее в переменную, мы записываем уникальный числовой идентификатор таймера (потому что их может быть очень много, нужно для остановки)
+
+// сброс:
+
+clearInterval(timerId); // можно активировать, нажав на какую-то кнопку
+
+// Вопрос -- чем рекурсивный setTimeout лучше чем setInterval? 
+// SetInterval не учитывает время работы функции внутри него -- например let timerId = setInterval(logger, 500)
+// а сама функция logger тяжелая, будет выполняться 3 секунды. setInterval не будет ждать 500мс, он начнет сразу выполнять следующий Logger
+
+let id = setTimeout(function log() {
+    console.log('hello');
+    id = setTimeout(log, 500);
+}, 500);
+
+
+// анимация движения квадратика по диагонали плавно вниз
+
+const btn = document.querySelector('.btn');
+let timerId,
+    i = 0;
+
+function myAnimation() {
+    const elem = document.querySelector('.box');
+    let pos = 0;
+
+    const id = setInterval(frame, 10);
+    function frame() {
+        if (pos == 300) {
+            clearInterval(id);
+        } else {
+            pos++;
+            elem.style.top = pos + "px";
+            elem.style.left = pos + 'px';
+        }
+    }
+}
+
+btn.addEventListener('click', myAnimation);
+
+// -------------------- lesson 57 (65) --------------------
+
+// Сборщик мусора и утечки памяти
+
+// вопросы для собеса -- JS это высокоуровневый ЯП (многие базовые операции за нас реализованы на программном уровне)
+// например работа с ОЗУ компьютера
+
+// JS -- интерпретируемый ЯП (интерпретатор построчно выполняет) (еще есть компилированные -- переводятся в 01 и выполняются)
+// почитать статью! -- https://nuancesprog.ru/p/12524/
+
+// сборщик -- подпрограммы, которые отслеживают выделение и использование памяти компьютера, освобождают память от неактивного кода
+// и прочитать Кантора -- https://learn.javascript.ru/garbage-collection
+
+// 1 утечка памяти -- глобальные переменные (можно создать переменную без ее объявления (не стоит 'use strict'))
+
+function func() {
+    window.smth = 'string'; // лишняя глобальная переменная, которая помещается в объект window
+}
+
+// 2 утечка памяти -- Забытые таймеры
+
+const someRes = getData(); // ccылка на данные 
+const node = document.querySelector('.class'); // ссылка на переменную 
+// если мы удалим элемент из DOM-дерева, то он останется в памяти, потому что ссылка на него существует внутри интервала
+// который срабатывает каждую секунду
+setInterval(function() {
+    if (node) {
+        node.innerHTML = someRes;
+    }
+}, 1000);
+
+/*
+В приведенном ниже примере объект данных может быть собран мусором только после очистки таймера. 
+Поскольку у нас нет ссылки на setInterval, его нельзя очистить, а data.hugeString сохраняется в памяти до тех пор, 
+пока приложение не остановится, хотя никогда не используется.*/
+
+function setCallback() {
+    const data = {
+        counter: 0,
+        hugeString: new Array(100000).join('x')
+    };
+    return function cb() {
+        data.counter++; // объект data сейчас является частью области видимости callback-функции
+        console.log(data.counter);
+    }
+}
+setInterval(setCallback(), 1000); // как это остановить?
+
+
+function setCallback() {
+    // 'unpacking' the data object
+    let counter = 0;
+    const hugeString = new Array(100000).join('x'); // удаляется при возврате setCallback
+    return function cb() {
+        counter++; // только переменная counter является частью области видимости функции-callback-а
+        console.log(counter);
+    }
+}
+ 
+const timerId = setInterval(setCallback(), 1000); // сохраняем дескриптор вызова в переменную
+ 
+// некоторые действия ...
+ 
+clearInterval(timerId); // останавливаем вызов таймера, например, по клику на кнопке или в условной конструкции if ... else
+
+
+
+// 3 утечка памяти -- обработчики событий на несуществующих элементах (часть элементов исчезли со временем)
+// ссылка есть, элемент удален. это теперь не проблема, современные браузеры сами удаляют обработчик событий
+
+// проблема в ДЗ (про фильмы) -- на каждую кнопку навесили обработчики событий, затем заново формировали верстку, а ссылку 
+// на обработчик событий -- нет. надо removeEventListener
+
+// 4 утечка памяти -- замыкание
+
+function outer() {
+    const potentiallyHugeArray = [];
+    return function inner() {
+        potentiallyHugeArray.push('hello');
+        console.log('hi');
+    }
+}
+const sayHello = outer();
+
+function repeat(fn, num) {
+    for (let i = 0; i < num; i++){
+        fn();
+    }
+}
+repeat(sayHello, 10);
+inner()
+
+// 5 утечка памяти -- ссылки на DOM-элементы
+
+// удаляем объекты из DOM, а ссылка на переменная в JS остается
+
+function createElement() {
+    const div = document.createElement('div');
+    div.id = 'test';
+    document.body.append(testDiv);
+}
+
+createElement();
+// document.body.append(testDiv);
+
+function deleteElement() {
+    document.body.removeChild(document.getElementById('test'));
+} // удаляем из DOM (верстки), а в JS он останется, потому что переменная testDiv останется
+// починить легко, надо команду поместить внутрь функи чтобы она удалилась (с функой целиком)
+deleteElement();
+
+// искать утечки -- профилирование в хроме (memory inspector) -- https://developer.chrome.com/docs/devtools/memory-inspector?hl=ru
+
+
+// -------------------- lesson 58 (66) --------------------
+
+// -------------------- lesson 59 (67) --------------------
+
+// -------------------- lesson 60 (68) --------------------
+
+// -------------------- lesson 61 (69) --------------------
+
+// -------------------- lesson 62 (70) --------------------
+
+// -------------------- lesson 63 (71) --------------------
+
+// -------------------- lesson 64 (72) --------------------
+
+// -------------------- lesson 65 (73) --------------------
+
+// -------------------- lesson 66 (74) --------------------
+
+// -------------------- lesson 67 (75) --------------------
+
+// -------------------- lesson 68 (76) --------------------
+
+// -------------------- lesson 69 (77) --------------------
+
+// -------------------- lesson 70 (78) --------------------
+
+// -------------------- lesson 71 (79) --------------------
+
+// -------------------- lesson 72 (80) --------------------
+
+// test!
 
 // -------------------- lesson 73 (83) --------------------
 
